@@ -36,3 +36,6 @@ This should take a users location, look up events in that area and return a list
  - scrape_data - Scrapes data from Website
  - find_events - Finds events given a location
  - display_events - Display events to user
+
+
+Idea: we can use this site https://www.zipcodeapi.com/API#zipToLoc to take a user's zip code and use the timezone identifier to find events in the area
