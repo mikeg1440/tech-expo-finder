@@ -8,6 +8,7 @@ class Scraper
 
   @@all = []
 
+  # initialize with defualt of saved page file location unless given a url
   def initialize(url = "pages/top100.html")
 
     @url = url
@@ -47,7 +48,7 @@ class Scraper
         # state = get_event_state(element)
         state = nil
 
-        Event.new(name, date, country, city, state)
+        Event.new(name, date, city, country)
       end
       # binding.pry
 

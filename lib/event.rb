@@ -5,7 +5,7 @@ class Event
 
   @@all = []
 
-  def initialize(name, date, city, state, country)
+  def initialize(name, date, city, country)
 
     @name = name
     @date = date
@@ -19,7 +19,7 @@ class Event
     # }
 
     # @location = Location.new(city, state, country)
-    save_location(city, state, country)
+    save_location(city, country)
 
     save
 
@@ -40,7 +40,7 @@ class Event
     end
   end
 
-  def get_events_by_state(state)
+  def self.get_events_by_state(state)
     events = get_events_in_country("USA")
 
     in_state = events.find_all {|event| event.state == state}
@@ -50,7 +50,7 @@ class Event
     in_state
   end
 
-  def get_events_by_country(country)
+  def self.get_events_by_country(country)
     Event.all.find_all {|event| event.country == country}
   end
 
@@ -65,27 +65,32 @@ class Event
 
     doc = Nokogiri::HTML(html)
 
-    # binding.pry
-
     doc.css(".bld").text
+  end
+
+  # prints out current instances information 
+  def print_event_information
+    print "Event: "
+    print "#{self.name}\n".green
+    print "\tEvent Date: "
+    print "#{self.date}\n".green
+    print "\tEvent Location: "
+    print "#{self.location.city}, #{self.location.country}\n\n".green
   end
 
   private
 
   # check if location already exists, if not create a new one
-  def save_location(city, state, country)
+  def save_location(city, country)
     if !Location.all.detect {|location| location.country == country && location.city == city}
-      @location = Location.new(city, state, country, self)
+      @location = Location.new(city, country, self)
     else
-      @location = Location.all.select {|location| location.country == country && location.city == city}
+      @location = Location.all.detect {|location| location.country == country && location.city == city}
     end
   end
 
   def save
     @@all << self
-    save_location
   end
-
-
 
 end

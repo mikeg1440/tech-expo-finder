@@ -10,15 +10,22 @@ class Location
 
   @@all = []
 
-  def initialize(city, state, country, event=nil)
+  def initialize(city, country, event=nil)
     @city = city
     @state = state
     @country = country
-    add_event(event) if event 
+    @events = []
+    add_event(event) if event
     save
   end
 
-  def add_event()
+  def add_event(event)
+    @events.detect {|e| e == event} || @events << event
+  end
+
+  def find_or_create_location(city, state, country, event=nil)
+    Location.all.detect {|location| location.city == city && location.country == country } || Location.new(city, state, country, event)
+  end
 
   def self.all
     @@all
