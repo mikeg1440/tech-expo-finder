@@ -5,6 +5,7 @@ source "https://rubygems.org"
 gem 'nokogiri'
 gem 'bundler'
 gem 'require_all'
+gem 'colorize'
 gem 'pry'
 gem 'pry-moves'
 gem 'json'
