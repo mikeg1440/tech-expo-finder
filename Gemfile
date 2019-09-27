@@ -3,6 +3,8 @@
 source "https://rubygems.org"
 
 gem 'nokogiri'
+gem 'bundler'
+gem 'require_all'
 gem 'pry'
 gem 'pry-moves'
 gem 'json'
