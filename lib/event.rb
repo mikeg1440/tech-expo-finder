@@ -5,20 +5,24 @@ class Event
 
   @@all = []
 
-  def initialize(name, date, country, city, state)
+  def initialize(name, date, city, state, country)
 
     @name = name
     @date = date
-    @country = country
-    @city = city
-    @state = state
-    @location = {
-      city: city,
-      state: state,
-      country: country
-    }
+    # @country = country
+    # @city = city
+    # @state = state
+    # @location = {
+    #   city: city,
+    #   state: state,
+    #   country: country
+    # }
 
-    @@all << self
+    # @location = Location.new(city, state, country)
+    save_location(city, state, country)
+
+    save
+
   end
 
   def self.all
@@ -66,24 +70,22 @@ class Event
     doc.css(".bld").text
   end
 
-  def create_events(doc)
+  private
 
-    doc.css("tbody tr").each do |element|
-
-      next if element.text == "RankEventWhenWhereCategoryRating"
-
-      if element.text != ""
-        name = element.css(".box-link strong").text.strip
-        date = element.css("td strong")[1].text.strip
-        country = element.css("td a.block").text.strip
-        city = element.css("td small.text-muted").first.text.strip
-        state = get_event_state(element)
-
-        Event.new(name, date, country, city, state)
-        binding.pry
-      end
-
+  # check if location already exists, if not create a new one
+  def save_location(city, state, country)
+    if !Location.all.detect {|location| location.country == country && location.city == city}
+      @location = Location.new(city, state, country, self)
+    else
+      @location = Location.all.select {|location| location.country == country && location.city == city}
     end
-
   end
+
+  def save
+    @@all << self
+    save_location
+  end
+
+
+
 end
