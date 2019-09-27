@@ -33,6 +33,29 @@ class Scraper
     @doc
   end
 
+  def scrape_and_create_events(doc)
+
+    doc.css("tbody tr").each do |element|
+
+      next if element.text == "RankEventWhenWhereCategoryRating"
+
+      if element.text != ""
+        name = element.css(".box-link strong").text.strip
+        date = element.css("td strong")[1].text.strip
+        country = element.css("td a.block").text.strip
+        city = element.css("td small.text-muted").first.text.strip
+        # state = get_event_state(element)
+        state = nil
+
+        Event.new(name, date, country, city, state)
+      end
+      # binding.pry
+
+    end
+
+  end
+
+
 
   private
 
