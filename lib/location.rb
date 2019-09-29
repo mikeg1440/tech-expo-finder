@@ -42,6 +42,12 @@ class Location
     JSON.parse(doc.text)
   end
 
+  def self.countries
+    countries = self.all.uniq {|location| location.country }.sort_by {|location| location.country}
+
+    countries.sort_by {|location| location.country}
+  end
+
 
   private
 
