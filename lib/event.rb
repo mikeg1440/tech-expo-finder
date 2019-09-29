@@ -5,20 +5,11 @@ class Event
 
   @@all = []
 
-  def initialize(name, date, city, country)
-
+  def initialize( name:, date:, city:, country: )
+    # binding.pry
     @name = name
     @date = date
-    # @country = country
-    # @city = city
-    # @state = state
-    # @location = {
-    #   city: city,
-    #   state: state,
-    #   country: country
-    # }
 
-    # @location = Location.new(city, state, country)
     save_location(city, country)
 
     save
@@ -29,16 +20,16 @@ class Event
     @@all
   end
 
-  def print_events(events)
-    events.each do |event|
-      print "Event: "
-      print "#{event.name}\n".green
-      print "\tEvent Date: "
-      print "#{event.date}\n".green
-      print "\tEvent Location: "
-      print "#{event.city}, #{event.country}\n\n".green
-    end
-  end
+  # def print_events(events)
+  #   events.each do |event|
+  #     print "Event: "
+  #     print "#{event.name}\n".green
+  #     print "\tEvent Date: "
+  #     print "#{event.date}\n".green
+  #     print "\tEvent Location: "
+  #     print "#{event.city}, #{event.country}\n\n".green
+  #   end
+  # end
 
   def self.get_events_by_state(state)
     events = get_events_in_country("USA")
@@ -68,7 +59,7 @@ class Event
     doc.css(".bld").text
   end
 
-  # prints out current instances information 
+  # prints out current instances information
   def print_event_information
     print "Event: "
     print "#{self.name}\n".green
