@@ -41,14 +41,22 @@ class Scraper
       next if element.text == "RankEventWhenWhereCategoryRating"
 
       if element.text != ""
-        name = element.css(".box-link strong").text.strip
-        date = element.css("td strong")[1].text.strip
-        country = element.css("td a.block").text.strip
-        city = element.css("td small.text-muted").first.text.strip
+        location = {
+          name: element.css(".box-link strong").text.strip,
+          date: element.css("td strong")[1].text.strip,
+          country: element.css("td a.block").text.strip,
+          city: element.css("td small.text-muted").first.text.strip
+        }
+        # name = element.css(".box-link strong").text.strip
+        # date = element.css("td strong")[1].text.strip
+        # country = element.css("td a.block").text.strip
+        # city = element.css("td small.text-muted").first.text.strip
         # state = get_event_state(element)
-        state = nil
+        # state = nil
+        # binding.pry
+        # Event.new(name, date, city, country)
+        Event.new(location)
 
-        Event.new(name, date, city, country)
       end
       # binding.pry
 
