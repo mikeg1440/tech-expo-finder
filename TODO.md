@@ -39,3 +39,10 @@ This should take a users location, look up events in that area and return a list
 
 
 Idea: we can use this site https://www.zipcodeapi.com/API#zipToLoc to take a user's zip code and use the timezone identifier to find events in the area
+
+Class Structure
+  - event-scraper-cli
+    - scraper
+      - event
+        - location
+          
