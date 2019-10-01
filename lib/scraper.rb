@@ -5,7 +5,7 @@ class Scraper
 
   @@all = []
 
-  # initialize with defualt of saved page file location unless given a url
+  # initialize with defualt of saved page file path unless given a url
   def initialize(url = "pages/top100.html")
 
     @url = url
@@ -47,21 +47,28 @@ class Scraper
       # }
 
       if element.text != ""# && !css_selectors
-        location = {
+        event_info = {
           name: element.css(".box-link strong").text.strip,
           date: element.css("td strong")[1].text.strip,
           country: element.css("td a.block").text.strip,
           city: element.css("td small.text-muted").first.text.strip
         }
 
+        if event_info[:date].include?(" - ")
+          date_regex = event_info[:date].scan(/\S+/)
+
+          event_info[start_date] = Date.parse(date_regex[0] << date_regex[3] << date_regex[4])
+          event_info[end_date] = Date.parse(date_regex[2] << date_regex[3] << date_regex[4])
+        end
         # convert date string to date object
-        # date_obj = Date.parse(location[:date])
-        # location[:date] = date_obj
+        # date_obj = Date.parse(event_info[:date])
+        # event_info[:date] = date_obj
+        binding.pry
 
 
         # state = get_event_state(element)
         # state = nil
-        Event.new(location)
+        Event.new(event_info)
 
       end
 

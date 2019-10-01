@@ -1,13 +1,14 @@
 
 class Event
 
-  attr_accessor :name, :location, :date#, :country, :city, :state
+  attr_accessor :name, :location, :start_date, :end_date#, :country, :city, :state
 
   @@all = []
 
-  def initialize( name:, date:, city:, country: )
+  def initialize( name:, start_date:, end_date:, city:, country: )
     @name = name
-    @date = date
+    @start_date = start_date
+    @end_date = end_date
 
     save_location(city, country)
 
