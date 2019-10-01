@@ -10,7 +10,8 @@ class ScraperCLI
 
   def initialize
     @scraper = Scraper.new
-    @scraper.scrape_and_create_events(@scraper.doc)
+    # @scraper.scrape_and_create_events(@scraper.doc)
+    scrape_events(@scraper)
     @user = create_new_user
     save
     show_menu
@@ -53,6 +54,12 @@ class ScraperCLI
     else
       puts "Invalid Menu Choice\nPlease Pick From One of The Menu Options!".red
     end
+  end
+
+  def scrape_events(scraper)
+
+
+    scraper.scrape_and_create_events
   end
 
   # displays list of states and country then asks user to pick a state

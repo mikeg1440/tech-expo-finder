@@ -11,10 +11,12 @@ class Scraper
     @url = url
 
     if url != "pages/top100.html"
-      open_from_url(url)
+      @doc = open_from_url(url)
     else
-      open_from_file(url)
+      @doc = open_from_file(url)
     end
+
+    self
   end
 
   def open_from_file(filepath = "pages/top100.html")
@@ -31,13 +33,20 @@ class Scraper
     @doc
   end
 
-  def scrape_and_create_events(doc)
+  def scrape_and_create_events#(doc, css_selectors = nil)
 
-    doc.css("tbody tr").each do |element|
+    @doc.css("tbody tr").each do |element|
 
       next if element.text == "RankEventWhenWhereCategoryRating"
 
-      if element.text != ""
+      # css_selectors = {
+      #   name: ".box-link strong",
+      #   date: "td strong",
+      #   country: "td a.block",
+      #   city: "td small.text-muted"
+      # }
+
+      if element.text != ""# && !css_selectors
         location = {
           name: element.css(".box-link strong").text.strip,
           date: element.css("td strong")[1].text.strip,
