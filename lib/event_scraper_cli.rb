@@ -58,7 +58,9 @@ class ScraperCLI
   # displays list of states and country then asks user to pick a state
   def find_events_by_city
 
-    sorted_by_cities = Location.all.uniq {|location| location.city}.sort_by { |l| l.city }
+    # sorted_by_cities = Location.all.uniq {|location| location.city}.sort_by { |l| l.city }
+
+    sorted_by_cities = Location.cities
 
     sorted_by_cities.each_with_index do |location, index|
       puts "#{index+1}. #{location.city}, #{location.country}".green
@@ -113,7 +115,29 @@ class ScraperCLI
 
     country = countries[country_choice.to_i - 1].country
 
-    get_events_by_country(country) unless country_choice == "00"
+    binding.pry
+    if country_choice == "00"
+      return
+    end
+
+    events = Event.get_events_by_country(country)  
+
+    events.each_with_index do |event, index|
+      puts "#{index+1}. #{event.name}".green
+    end
+
+    event_choice = nil
+
+    loop do
+
+      puts "00. Exit".red
+      print "Enter a Event's Number: ".blue
+      event_choice = gets.chomp
+
+      break if event_choice.to_i.between?(1, events.count) || event_choice == "00"
+    end
+
+    events[event_choice.to_i - 1].print_event_information
 
   end
 
