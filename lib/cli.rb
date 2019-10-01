@@ -122,7 +122,14 @@ class EventScraperCli::CLI
 
     event_choice = get_user_reponse(question, events.count)
 
-    events[event_choice.to_i - 1].print_event_information
+    # events[event_choice.to_i - 1].print_event_information
+
+    chosen_event = events[event_choice.to_i - 1]
+
+    chosen_event.print_event_information
+
+    get_details(chosen_event) if get_event_details?
+
 
   end
 
@@ -154,6 +161,22 @@ class EventScraperCli::CLI
 
   end
 
+  def get_event_details?
+    response = ""
+
+    until ["y", "yes", "n", "no"].include?(response.downcase)
+      print "Would you Like to See Event's Details(yes/no)".blue
+      response = gets.chomp.downcase
+    end
+
+    response == "y" || response == "yes"
+  end
+
+  def get_details(event)
+    # detail_scraper = EventScraperCli::Scraper.new(event.url)
+    # detail_scraper.scrape_event_details
+    system("xdg-open '#{event.url}'")
+  end
 
   def show_events_by_location(location)
 
@@ -167,8 +190,11 @@ class EventScraperCli::CLI
     question = "Enter a Event's Number: "
     event_choice = get_user_reponse(question, events.count)
 
-    events[event_choice.to_i - 1].print_event_information
+    chosen_event = events[event_choice.to_i - 1]
 
+    chosen_event.print_event_information
+
+    get_details(chosen_event) if get_event_details?
   end
 
 

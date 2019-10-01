@@ -20,15 +20,16 @@ class EventScraperCli::Scraper
   end
 
   def open_from_file(filepath = "pages/top100.html")
-    url = File.read(filepath)
-    @doc = Nokogiri::HTML(url)
+    html = File.read(filepath)
+    @doc = Nokogiri::HTML(html)
     save
     @doc
   end
 
   def open_from_url(url)
-    html = open(url)
-    @doc = Nokogiri::HTML(html)
+    # html = open(url)
+    binding.pry
+    @doc = Nokogiri::HTML(open(url))
     save
     @doc
   end
@@ -55,6 +56,7 @@ class EventScraperCli::Scraper
           url: element.css("a").first['href']
         }
 
+        # convert out date_string into start and end Date objects
         if event_info[:date_string].include?(" - ")
           date_regex = event_info[:date_string].scan(/\S+/)
 
@@ -67,6 +69,23 @@ class EventScraperCli::Scraper
       end
 
     end
+
+  end
+
+  def scrape_event_details(event)
+
+    binding.pry
+
+    # description_title = @doc.css(".desc strong").text.strip
+    #
+    # description = @doc.css(".desc").split("\n")[1].strip
+    #
+    # speakers = {
+    #   url: @doc.css("#speakers a").first['href'],
+    #   quantity: @doc.css("#speakers a").first.text.split[1]
+    # }
+    #
+    # content = @doc.css("tr td")    
 
   end
 
