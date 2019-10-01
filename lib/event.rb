@@ -1,14 +1,16 @@
 
-class Event
+class EventScraperCli::Event
 
-  attr_accessor :name, :location, :start_date, :end_date#, :country, :city, :state
+  attr_accessor :name, :location, :start_date, :end_date, :date_string, :url
 
   @@all = []
 
-  def initialize( name:, start_date:, end_date:, city:, country: )
+  def initialize( name:, start_date:, end_date:, date_string:, city:, country:, url: )
     @name = name
     @start_date = start_date
     @end_date = end_date
+    @date_string = date_string
+    @url = url
 
     save_location(city, country)
 
@@ -21,54 +23,33 @@ class Event
   end
 
   def self.get_events_by_location(location)
-    Event.all.find_all {|event| event.location == location }
+    self.all.find_all {|event| event.location == location }
   end
-
-  # def self.get_events_by_state(state = "USA")
-  #   # events = get_events_in_country("USA")
-  #
-  #   # in_state = events.find_all {|event| event.state == state}
-  #
-  #   # in_state
-  #   get_events_in_country.find_all {|event| event.state == state}.sort_by {|event| event.location.country}
-  # end
 
   def self.get_events_by_country(country)
     self.all.find_all {|event| event.location.country == country}.sort_by {|event| event.location.country}
   end
-
-  # def get_events_state(element)
-  #
-  #   url = element.css("td strong a").first['href']
-  #
-  #   binding.pry
-  #   puts "Getting Cities State From: #{url}"
-  #
-  #   html = open(url)
-  #
-  #   doc = Nokogiri::HTML(html)
-  #
-  #   doc.css(".bld").text
-  # end
 
   # prints out current instances information
   def print_event_information
     print "Event: "
     print "#{self.name}\n".green
     print "\tEvent Date: "
-    print "#{self.date}\n".green
+    print "#{self.date_string}\n".green
     print "\tEvent Location: "
-    print "#{self.location.city}, #{self.location.country}\n\n".green
+    print "#{self.location.city}, #{self.location.country}\n".green
+    print "\tEvent URL: "
+    print "#{self.url}\n\n".green
   end
 
   private
 
   # check if location already exists, if not create a new one
   def save_location(city, country)
-    if !Location.all.detect {|location| location.country == country && location.city == city}
-      @location = Location.new(city, country, self)
+    if !EventScraperCli::Location.all.detect {|location| location.country == country && location.city == city}
+      @location = EventScraperCli::Location.new(city, country, self)
     else
-      @location = Location.all.detect {|location| location.country == country && location.city == city}
+      @location = EventScraperCli::Location.all.detect {|location| location.country == country && location.city == city}
     end
   end
 

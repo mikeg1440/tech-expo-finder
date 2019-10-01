@@ -1,5 +1,5 @@
 
-class Scraper
+class EventScraperCli::Scraper
 
   attr_accessor :url, :doc
 
@@ -49,26 +49,20 @@ class Scraper
       if element.text != ""# && !css_selectors
         event_info = {
           name: element.css(".box-link strong").text.strip,
-          date: element.css("td strong")[1].text.strip,
+          date_string: element.css("td strong")[1].text.strip,
           country: element.css("td a.block").text.strip,
-          city: element.css("td small.text-muted").first.text.strip
+          city: element.css("td small.text-muted").first.text.strip,
+          url: element.css("a").first['href']
         }
 
-        if event_info[:date].include?(" - ")
-          date_regex = event_info[:date].scan(/\S+/)
+        if event_info[:date_string].include?(" - ")
+          date_regex = event_info[:date_string].scan(/\S+/)
 
-          event_info[start_date] = Date.parse(date_regex[0] << date_regex[3] << date_regex[4])
-          event_info[end_date] = Date.parse(date_regex[2] << date_regex[3] << date_regex[4])
+          event_info[:start_date] = Date.parse(date_regex[0] << date_regex[3] << date_regex[4])
+          event_info[:end_date] = Date.parse(date_regex[2] << date_regex[3] << date_regex[4])
         end
-        # convert date string to date object
-        # date_obj = Date.parse(event_info[:date])
-        # event_info[:date] = date_obj
-        binding.pry
 
-
-        # state = get_event_state(element)
-        # state = nil
-        Event.new(event_info)
+        EventScraperCli::Event.new(event_info)
 
       end
 
