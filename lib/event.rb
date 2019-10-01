@@ -20,16 +20,6 @@ class Event
     @@all
   end
 
-  # def print_events(events)
-  #   events.each do |event|
-  #     print "Event: "
-  #     print "#{event.name}\n".green
-  #     print "\tEvent Date: "
-  #     print "#{event.date}\n".green
-  #     print "\tEvent Location: "
-  #     print "#{event.city}, #{event.country}\n\n".green
-  #   end
-  # end
 
   def self.get_events_by_state(state)
     events = get_events_in_country("USA")
@@ -42,7 +32,7 @@ class Event
   end
 
   def self.get_events_by_country(country)
-    Event.all.find_all {|event| event.country == country}
+    self.all.find_all {|event| event.location.country == country}.sort_by {|event| event.location.country}
   end
 
   def get_events_state(element)

@@ -47,6 +47,12 @@ class Scraper
           country: element.css("td a.block").text.strip,
           city: element.css("td small.text-muted").first.text.strip
         }
+
+        # convert date string to date object
+        # date_obj = Date.parse(location[:date])
+        # location[:date] = date_obj
+
+
         # name = element.css(".box-link strong").text.strip
         # date = element.css("td strong")[1].text.strip
         # country = element.css("td a.block").text.strip

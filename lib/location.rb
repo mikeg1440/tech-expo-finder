@@ -43,9 +43,11 @@ class Location
   end
 
   def self.countries
-    countries = self.all.uniq {|location| location.country }.sort_by {|location| location.country}
+    self.all.uniq {|location| location.country }.sort_by {|location| location.country}
+  end
 
-    countries.sort_by {|location| location.country}
+  def self.cities
+    self.all.uniq {|location| location.city}.sort_by { |l| l.city }
   end
 
 
