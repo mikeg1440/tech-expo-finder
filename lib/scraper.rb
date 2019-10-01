@@ -1,6 +1,3 @@
-require 'open-uri'
-require 'nokogiri'
-require 'pry-moves'
 
 class Scraper
 
@@ -53,24 +50,15 @@ class Scraper
         # location[:date] = date_obj
 
 
-        # name = element.css(".box-link strong").text.strip
-        # date = element.css("td strong")[1].text.strip
-        # country = element.css("td a.block").text.strip
-        # city = element.css("td small.text-muted").first.text.strip
         # state = get_event_state(element)
         # state = nil
-        # binding.pry
-        # Event.new(name, date, city, country)
         Event.new(location)
 
       end
-      # binding.pry
 
     end
 
   end
-
-
 
   private
 

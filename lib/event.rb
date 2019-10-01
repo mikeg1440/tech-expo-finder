@@ -1,12 +1,11 @@
 
 class Event
 
-  attr_accessor :name, :location, :date, :country, :city, :state
+  attr_accessor :name, :location, :date#, :country, :city, :state
 
   @@all = []
 
   def initialize( name:, date:, city:, country: )
-    # binding.pry
     @name = name
     @date = date
 
@@ -20,15 +19,17 @@ class Event
     @@all
   end
 
+  def self.get_events_by_location(location)
+    Event.all.find_all {|event| event.location == location }
+  end
 
-  def self.get_events_by_state(state)
-    events = get_events_in_country("USA")
+  def self.get_events_by_state(state = "USA")
+    # events = get_events_in_country("USA")
 
-    in_state = events.find_all {|event| event.state == state}
+    # in_state = events.find_all {|event| event.state == state}
 
-    binding.pry
-
-    in_state
+    # in_state
+    events.find_all {|event| event.state == state}.sort_by {|event| event.location.country}
   end
 
   def self.get_events_by_country(country)

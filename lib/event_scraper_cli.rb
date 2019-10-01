@@ -79,12 +79,11 @@ class ScraperCLI
 
     # city = sorted_by_cities[city_choice.to_i - 1].city
     # country = sorted_by_cities[city_choice.to_i - 1].country
-
     # get_events_by_location(city, country) unless country_choice == "00"
 
     location = sorted_by_cities[city_choice.to_i - 1]
 
-    get_events_by_location(location) unless city_choice == "00"
+    show_events_by_location(location) unless city_choice == "00"
 
   end
 
@@ -94,9 +93,6 @@ class ScraperCLI
 
     country_choice = nil
 
-    # countries = Location.all.uniq {|location| location.country }.sort_by {|location| location.country}
-    #
-    # countries = countries.sort_by {|location| location.country}
     countries = Location.countries
     countries.each.with_index do |location, index|
       puts "#{index+1}. #{location.country}".green
@@ -115,12 +111,11 @@ class ScraperCLI
 
     country = countries[country_choice.to_i - 1].country
 
-    binding.pry
     if country_choice == "00"
       return
     end
 
-    events = Event.get_events_by_country(country)  
+    events = Event.get_events_by_country(country)
 
     events.each_with_index do |event, index|
       puts "#{index+1}. #{event.name}".green
@@ -166,9 +161,10 @@ class ScraperCLI
 
   end
 
-  def get_events_by_location(location)
 
-    events = Event.all.find_all {|event| event.location == location }.sort_by {|e| e.city}
+  def show_events_by_location(location)
+
+    events = Event.get_events_by_location(location).sort_by {|e| e.location.city}
 
     events.each_with_index do |event, index|
       puts "#{index+1}. #{event.name}".green
