@@ -28,7 +28,6 @@ class EventScraperCli::Scraper
 
   def open_from_url(url)
     # html = open(url)
-    binding.pry
     @doc = Nokogiri::HTML(open(url))
     save
     @doc
@@ -74,19 +73,32 @@ class EventScraperCli::Scraper
 
   def scrape_event_details(event)
 
-    binding.pry
+    description = @doc.css(".desc strong").text
 
-    # description_title = @doc.css(".desc strong").text.strip
-    #
-    # description = @doc.css(".desc").split("\n")[1].strip
-    #
     # speakers = {
     #   url: @doc.css("#speakers a").first['href'],
     #   quantity: @doc.css("#speakers a").first.text.split[1]
     # }
-    #
-    # content = @doc.css("tr td")    
 
+    # state_string = @doc.css(".lead li").text.strip
+    # state_string = state_string.match(/,[\s\S]*$/)[0].split(',') if state_string
+    # event.location.state = state
+
+    time_data = @doc.css("#hvrout1").text.split("\n").map {|line| line.strip}
+    hours = []
+    days = []
+
+    time_data.each do |line|
+      hour_match = line.scan(/\d\d:\d\d [PM|AM]./)
+      day_match = line.scan(/\( ?(\w+) (\d\d)?\)/)
+      hours << hour_match unless hour_match.empty?
+      days << day_match unless day_match.empty?
+    end
+
+
+    event.hours = hours unless hours.empty?
+    event.days = days unless days.empty?
+    event.description = description unless description.empty?
   end
 
   private
