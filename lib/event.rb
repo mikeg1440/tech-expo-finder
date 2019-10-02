@@ -1,7 +1,7 @@
 
 class EventScraperCli::Event
 
-  attr_accessor :name, :location, :start_date, :end_date, :date_string, :url
+  attr_accessor :name, :location, :start_date, :end_date, :date_string, :url, :hours, :days, :description
 
   @@all = []
 
@@ -36,7 +36,9 @@ class EventScraperCli::Event
     print "#{self.name}\n".green
     print "\tEvent Date: "
     print "#{self.date_string}\n".green
-    print "\tEvent Location: "
+    print "\tEvent Hours: "
+    self.hours.each {|day| print "\n\t\t#{day.join(" - ")}".green} unless self.hours == nil || self.hours.empty?
+    print "\n\tEvent Location: "
     print "#{self.location.city}, #{self.location.country}\n".green
     print "\tEvent URL: "
     print "#{self.url}\n\n".green
