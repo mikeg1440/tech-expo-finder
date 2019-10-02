@@ -114,27 +114,9 @@ class EventScraperCli::CLI
 
     events = EventScraperCli::Event.get_events_by_country(country)
 
-    # events.each_with_index do |event, index|
-    #   puts "#{index+1}. #{event.name}".green
-    # end
-    #
-    # puts "00. Exit".red
-    #
-    # event_choice = nil
-    #
     question = "Enter a Event's Number: "
-    #
-    # event_choice = get_user_reponse(question, events.count)
 
     chosen_event = list_events(events, question)
-
-    # return nil if event_choice == "00"
-
-    # events[event_choice.to_i - 1].print_event_information
-
-    # chosen_event = events[event_choice.to_i - 1]
-
-    # get_details(chosen_event)
 
     chosen_event ? get_details(chosen_event) : return
 
@@ -164,21 +146,7 @@ class EventScraperCli::CLI
       return nil
     end
 
-    # events.each {|event| event.print_event_information }
-    # events.each_with_index do |event, index|
-    #   puts "#{index+1}. #{event.name}".green
-    # end
-    #
-    # puts "00. Exit".red
-    # event_choice = nil
-    #
     question = "Enter a Event's Number: "
-    #
-    # event_choice = get_user_reponse(question, events.count)
-    #
-    # return nil if event_choice == "00"
-    #
-    # chosen_event = events[event_choice.to_i - 1]
 
     chosen_event = list_events(events, question)
 
@@ -196,20 +164,7 @@ class EventScraperCli::CLI
 
     events = EventScraperCli::Event.all.find_all {|e| e.name.downcase.match(/#{user_input.downcase}/)}
 
-    # events.each {|e| e.print_event_information}
-    # events.each_with_index do |event, index|
-    #   puts "#{index+1}. #{event.name}".green
-    # end
-    #
-    # puts "00. Exit".red
-    # event_choice = nil
     question = "Enter a Event's Number: "
-    #
-    # event_choice = get_user_reponse(question, events.count)
-    #
-    # return nil if event_choice == "00"
-    #
-    # chosen_event = events[event_choice.to_i - 1]
 
     chosen_event = list_events(events, question)
 
