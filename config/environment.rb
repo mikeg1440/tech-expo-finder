@@ -1,6 +1,6 @@
 require 'bundler'
 require 'open-uri'
-Bundler.require
+Bundler.require(:default, :developement)
 
 module EventScraperCli
   require_relative '../lib/cli'
