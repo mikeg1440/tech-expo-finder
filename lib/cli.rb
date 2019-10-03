@@ -21,7 +21,7 @@ class EventScraperCli::CLI
       puts "3. Show Events By Date - [find by date]".green
       puts "4. Get Event Info By Name - [find by name]".green
       puts "!. Reload File".magenta
-      puts "0. Exit".red
+      puts "0. Exit - [exit]".red
 
       print "Please Pick A Valid Menu Number[1-4]: ".blue
       menu_pick = gets.chomp.downcase
@@ -90,23 +90,46 @@ class EventScraperCli::CLI
 
     sorted_cities = EventScraperCli::Location.cities
 
-    sorted_cities.each_with_index do |location, index|
-      puts "#{index+1}. #{location.city}, #{location.country}".green
+    # sorted_cities.each_with_index do |location, index|
+    #   puts "#{index+1}. #{location.city}, #{location.country}".green
+    # end
+    #
+    # puts "00. Exit".red
+    #
+    input_question = "Choose a City to View Events: "
+    # city_choice = get_user_reponse(input_question, sorted_cities.count)
+    #
+    # return nil if city_choice == "00"
+
+    # location = sorted_cities[city_choice.to_i - 1]
+
+    location = list_locations(sorted_cities, input_question)
+
+    show_events_by_location(location) if location
+
+  end
+
+
+  def list_locations(locations, question)
+    binding.pry
+    if question.match(/City/)
+      locations.each_with_index do |location, index|
+        puts "#{index+1}. #{location.city}, #{location.country}".green
+      end
+    else
+      locations.each.with_index do |location, index|
+        puts "#{index+1}. #{location.country}".green
+      end
     end
 
     puts "00. Exit".red
 
-    input_question = "Choose a City to View Events: "
-    city_choice = get_user_reponse(input_question, sorted_cities.count)
+    user_choice = get_user_reponse(question, locations.count)
 
-    return nil if city_choice == "00"
+    return nil if user_choice == "00"
 
-    location = sorted_cities[city_choice.to_i - 1]
-
-    show_events_by_location(location) unless city_choice == "00"
-
+    locations[user_choice.to_i - 1]
   end
-
 
   # gets unique sorted list of countries with events, then asks user to pick a country that they want to view events from
   def find_events_by_country
@@ -245,17 +268,19 @@ class EventScraperCli::CLI
 
     events = EventScraperCli::Event.get_events_by_location(location).sort_by {|e| e.location.city}
 
-    events.each_with_index do |event, index|
-      puts "#{index+1}. #{event.name}".green
-    end
-    puts "00. Exit".red
-
+    # events.each_with_index do |event, index|
+    #   puts "#{index+1}. #{event.name}".green
+    # end
+    # puts "00. Exit".red
+    #
     question = "Enter a Event's Number: "
-    event_choice = get_user_reponse(question, events.count)
+    # event_choice = get_user_reponse(question, events.count)
+    #
+    # return nil if event_choice == "00"
+    #
+    # chosen_event = events[event_choice.to_i - 1]
 
-    return nil if event_choice == "00"
-
-    chosen_event = events[event_choice.to_i - 1]
+    chosen_event = list_events(events, question)
 
     get_details(chosen_event)
 
