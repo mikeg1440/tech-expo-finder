@@ -39,13 +39,6 @@ class EventScraperCli::Scraper
 
       next if element.text == "RankEventWhenWhereCategoryRating"
 
-      # css_selectors = {
-      #   name: ".box-link strong",
-      #   date: "td strong",
-      #   country: "td a.block",
-      #   city: "td small.text-muted"
-      # }
-
       if element.text != ""# && !css_selectors
         event_info = {
           name: element.css(".box-link strong").text.strip,
@@ -75,22 +68,15 @@ class EventScraperCli::Scraper
 
     description = @doc.css(".desc strong").text
 
-    # speakers = {
-    #   url: @doc.css("#speakers a").first['href'],
-    #   quantity: @doc.css("#speakers a").first.text.split[1]
-    # }
-
-    # state_string = @doc.css(".lead li").text.strip
-    # state_string = state_string.match(/,[\s\S]*$/)[0].split(',') if state_string
-    # event.location.state = state
-
     time_data = @doc.css("#hvrout1").text.split("\n").map {|line| line.strip}
     hours = []
     days = []
 
     time_data.each do |line|
       hour_match = line.scan(/\d\d:\d\d [PM|AM]./)
-      day_match = line.scan(/\( ?(\w+) (\d\d)?\)/)
+      # day_match = line.scan(/\( ?(\w+) (\d\d)?\)/)
+      day_match = line.scan(/[JFMARSND][a-z]{2} \d+/)
+
       hours << hour_match unless hour_match.empty?
       days << day_match unless day_match.empty?
     end
