@@ -90,18 +90,7 @@ class EventScraperCli::CLI
 
     sorted_cities = EventScraperCli::Location.cities
 
-    # sorted_cities.each_with_index do |location, index|
-    #   puts "#{index+1}. #{location.city}, #{location.country}".green
-    # end
-    #
-    # puts "00. Exit".red
-    #
     input_question = "Choose a City to View Events: "
-    # city_choice = get_user_reponse(input_question, sorted_cities.count)
-    #
-    # return nil if city_choice == "00"
-
-    # location = sorted_cities[city_choice.to_i - 1]
 
     location = list_locations(sorted_cities, input_question)
 
@@ -138,23 +127,29 @@ class EventScraperCli::CLI
 
 
     # [----] MAKE THIS NEXT SECTION OF CODE INTO A METHOD IF ITS USED AGIAN ANYWHERE ELSE IN THIS CLASS [----]
-    countries.each.with_index do |location, index|
-      puts "#{index+1}. #{location.country}".green
-    end
-
-    puts "00. Exit".red
-
+    # countries.each.with_index do |location, index|
+    #   puts "#{index+1}. #{location.country}".green
+    # end
+    #
+    # puts "00. Exit".red
+    #
     question = "Choose a Country to View Events: "
-
-    country_choice = get_user_reponse(question, countries.count)
-
-    return nil if country_choice == "00"
-
-    country = countries[country_choice.to_i - 1].country
+    #
+    # country_choice = get_user_reponse(question, countries.count)
+    #
+    # return nil if country_choice == "00"
+    #
+    # country = countries[country_choice.to_i - 1].country
 
     # [----] UP UNTIL THIS POINT [----]
 
-    events = EventScraperCli::Event.get_events_by_country(country)
+    location = list_locations(countries, question)
+
+    return nil unless location
+
+    events = EventScraperCli::Event.get_events_by_country(location.country)
+
+    # events = country.events
 
     question = "Enter a Event's Number: "
 
