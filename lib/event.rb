@@ -32,12 +32,16 @@ class EventScraperCli::Event
 
   # prints out current instances information
   def print_event_information
+
+    puts "\e[H\e[2J" # this clears the terminal screen
+
     print "Event: "
     print "#{self.name}\n".green
     print "\tEvent Date: "
     print "#{self.date_string}\n".green
     print "\tEvent Hours: "
-    self.hours.each {|day| print "\n\t\t#{day.join(" - ")}".green} unless self.hours == nil || self.hours.empty?
+    self.hours.each.with_index {|day, i| print "\n\t\t#{day.join(" - ")}".green} unless self.hours == nil || self.hours.empty?
+    # self.hours.each.with_index {|day, i| print "\n\t\t#{self.days[i]} #{day.join(" - ")}".green} unless self.hours == nil || self.hours.empty?
     print "\n\tEvent Location: "
     print "#{self.location.city}, #{self.location.country}\n".green
     print "\tEvent URL: "

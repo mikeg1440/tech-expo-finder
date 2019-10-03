@@ -12,10 +12,15 @@ class EventScraperCli::CLI
 
   # displays menu options to user and prompts for a selection
   def show_menu
+
+    puts "\e[H\e[2J" # this clears the terminal screen
+
     puts "Hello User!".blue
 
     loop do
-      puts "Please Pick a Option 1-4 or type in command within brackets".blue
+
+      # display menu to user
+      puts "Please Pick a Option 1-4 or type in command on the right within brackets".blue
       puts "1. Show Events by Country - [find by country]".green
       puts "2. Show Events by City - [find by city]".green
       puts "3. Show Events By Date - [find by date]".green
@@ -23,7 +28,7 @@ class EventScraperCli::CLI
       puts "!. Reload File".magenta
       puts "0. Exit - [exit]".red
 
-      print "Please Pick A Valid Menu Number[1-4]: ".blue
+      print "Please Pick A Valid Menu Number[0-4]: ".blue
       menu_pick = gets.chomp.downcase
 
       if menu_pick == "0" || menu_pick == "exit"
@@ -54,6 +59,7 @@ class EventScraperCli::CLI
     when "!", "reload"
       reload_file
     else
+      puts "\e[H\e[2J" # this clears the terminal screen
       puts "Invalid Menu Choice\nPlease Pick From One of The Menu Options!".red
     end
 
@@ -100,7 +106,9 @@ class EventScraperCli::CLI
 
 
   def list_locations(locations, question)
-    binding.pry
+
+    puts "\e[H\e[2J" # this clears the terminal screen
+
     if question.match(/City/)
       locations.each_with_index do |location, index|
         puts "#{index+1}. #{location.city}, #{location.country}".green
@@ -114,6 +122,8 @@ class EventScraperCli::CLI
     puts "00. Exit".red
 
     user_choice = get_user_reponse(question, locations.count)
+
+    puts "\e[H\e[2J" # this clears the terminal screen
 
     return nil if user_choice == "00"
 
@@ -179,9 +189,9 @@ class EventScraperCli::CLI
 
     events = EventScraperCli::Event.all.find_all {|event| user_date.between?(event.start_date, event.end_date) }
 
-    binding.pry
-
     if events.empty?
+      puts "\e[H\e[2J" # this clears the terminal screen
+
       print "No Events Found on the date: ".red
       print "#{user_date.month}-#{user_date.day}-#{user_date.year}\n".green
       return nil
@@ -190,6 +200,8 @@ class EventScraperCli::CLI
     question = "Enter a Event's Number: "
 
     chosen_event = list_events(events, question)
+
+    puts "\e[H\e[2J" # this clears the terminal screen
 
     get_details(chosen_event)
 
@@ -221,6 +233,8 @@ class EventScraperCli::CLI
 
   # this method takes a array of event objects plus a question to prompt user then lists events with numbers, gets and returns user reponse to question
   def list_events(events, question)
+
+    puts "\e[H\e[2J" # this clears the terminal screen
 
     events.each_with_index do |event, index|
       puts "#{index+1}. #{event.name}".green
@@ -255,6 +269,8 @@ class EventScraperCli::CLI
   def open_in_browser(event)
     print "Open Webpage in Browser?(yes/no): ".blue
     response = gets.chomp.downcase
+
+    puts "\e[H\e[2J" # this clears the terminal screen
 
     system("xdg-open '#{event.url}'") if response == "y" || response == "yes"
   end
