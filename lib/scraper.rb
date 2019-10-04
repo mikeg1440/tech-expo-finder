@@ -80,16 +80,18 @@ class EventScraperCli::Scraper
     event.users = @doc.css("#visitors").text.match(/\d+/)
     event.exhibitors = @doc.css("#exhibitors").text.match(/\d+/)
     event.photos = @doc.css("#photo").text.match(/\d+/)
-    event.photo_url = doc.css("#photo").css("a")[0]['href']
+    event.photo_url = @doc.css("#photo").css("a")[0]['href'] unless @doc.css("#photo").css("a").empty?
+    binding.pry
     event.price = @doc.css(".text-muted.ml-10").text.strip if @doc.css(".text-muted.ml-10")
     event.rating = @doc.css(".label.label-success").text.match(/\d\.?\d\/\d/)[0] if @doc.css(".label.label-success").text.match(/\d\.?\d\/\d/)
 
-    if @doc.css("#hvrout2 td a").count == 3
-      event.visitors = @doc.css("#hvrout2 td a")[0].text.strip
-      event.expected_exhibitors = @doc.css("#hvrout2 td a")[1].text.strip
-      event.category = @doc.css("#hvrout2 td a")[2].text.strip
-    end
+    # if @doc.css("#hvrout2 td a").count == 3
+    event.visitors = @doc.css("#hvrout2 td a")[0].text.strip
+    event.expected_exhibitors = @doc.css("#hvrout2 td a")[1].text.strip
+    event.category = @doc.css("#hvrout2 td a")[2].text.strip
+    # end
 
+    binding.pry
 
 
     event.time_data.each do |line|
