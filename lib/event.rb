@@ -1,8 +1,8 @@
 
 class EventScraperCli::Event
 
-  attr_accessor :name, :location, :start_date, :end_date, :date_string, :url, :hours, :days, :description
-
+  attr_accessor :name, :location, :start_date, :end_date, :date_string, :url, :hours, :days, :description, :users, :exhibitors, :photos, :photo_url, :price,:rating, :visitors, :expected_exhibitors, :category, :time_data
+  # attr_accessor :rating, :visitors, :expected_exhibitors, :category, :time_data
   @@all = []
 
   def initialize( name:, start_date:, end_date:, date_string:, city:, country:, url: )
