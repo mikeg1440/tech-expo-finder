@@ -42,10 +42,28 @@ class EventScraperCli::Event
     print "\tEvent Hours: "
     self.hours.each.with_index {|day, i| print "\n\t\t#{day.join(" - ")}".green} unless self.hours == nil || self.hours.empty?
     # self.hours.each.with_index {|day, i| print "\n\t\t#{self.days[i]} #{day.join(" - ")}".green} unless self.hours == nil || self.hours.empty?
+    print "\tRating: "
+    print "#{self.rating}\n".green
+
+    print "\tCategory: "
+    print "#{self.category}\n".green
+
     print "\n\tEvent Location: "
     print "#{self.location.city}, #{self.location.country}\n".green
+
+    print "\tExpected Visitors: "
+    print "#{self.visitors}\n".green
+
+    print "\tExpected Exhibitors: "
+    print "#{self.expected_exhibitors}\n".green
+
+    print "\tVerified Exhibitors: "
+    print "#{self.exhibitors}\n".green
+
     print "\tEvent URL: "
-    print "#{self.url}\n\n".green
+    print "#{self.url}\n\n\n".green
+
+
   end
 
   private
