@@ -66,13 +66,33 @@ class EventScraperCli::Scraper
 
   def scrape_event_details(event)
 
-    description = @doc.css(".desc strong").text
 
-    time_data = @doc.css("#hvrout1").text.split("\n").map {|line| line.strip}
+    event_info = {}
+
+    event.description = @doc.css(".desc strong").text
+
+
+    binding.pry
+    event.time_data = @doc.css("#hvrout1").text.split("\n").map {|line| line.strip}
     hours = []
     days = []
 
-    time_data.each do |line|
+    event.users = @doc.css("#visitors").text.match(/\d+/)
+    event.exhibitors = @doc.css("#exhibitors").text.match(/\d+/)
+    event.photos = @doc.css("#photo").text.match(/\d+/)
+    event.photo_url = doc.css("#photo").css("a")[0]['href']
+    event.price = @doc.css(".text-muted.ml-10").text.strip if @doc.css(".text-muted.ml-10")
+    event.rating = @doc.css(".label.label-success").text.match(/\d\.?\d\/\d/)[0] if @doc.css(".label.label-success").text.match(/\d\.?\d\/\d/)
+
+    if @doc.css("#hvrout2 td a").count == 3
+      event.visitors = @doc.css("#hvrout2 td a")[0].text.strip
+      event.expected_exhibitors = @doc.css("#hvrout2 td a")[1].text.strip
+      event.category = @doc.css("#hvrout2 td a")[2].text.strip
+    end
+
+
+
+    event.time_data.each do |line|
       hour_match = line.scan(/\d\d:\d\d [PM|AM]./)
       # day_match = line.scan(/\( ?(\w+) (\d\d)?\)/)
       day_match = line.scan(/[JFMARSND][a-z]{2} \d+/)
@@ -84,7 +104,6 @@ class EventScraperCli::Scraper
 
     event.hours = hours unless hours.empty?
     event.days = days unless days.empty?
-    event.description = description unless description.empty?
   end
 
   private
