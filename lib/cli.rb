@@ -8,14 +8,15 @@ class EventScraperCli::CLI
     @scraper = EventScraperCli::Scraper.new
     scrape_events(@scraper)
     show_menu
+    exit_message
   end
 
   # displays menu options to user and prompts for a selection
   def show_menu
 
-    puts "\e[H\e[2J" # this clears the terminal screen
+    clear_screen
 
-    puts "Hello User!".blue
+    puts "\tHello User!".blue
 
     loop do
 
@@ -59,7 +60,7 @@ class EventScraperCli::CLI
     when "!", "reload"
       reload_file
     else
-      puts "\e[H\e[2J" # this clears the terminal screen
+      clear_screen
       puts "Invalid Menu Choice\nPlease Pick From One of The Menu Options!".red
     end
 
@@ -107,7 +108,7 @@ class EventScraperCli::CLI
 
   def list_locations(locations, question)
 
-    puts "\e[H\e[2J" # this clears the terminal screen
+    clear_screen
 
     if question.match(/City/)
       locations.each_with_index do |location, index|
@@ -123,7 +124,7 @@ class EventScraperCli::CLI
 
     user_choice = get_user_reponse(question, locations.count)
 
-    puts "\e[H\e[2J" # this clears the terminal screen
+    clear_screen
 
     return nil if user_choice == "00"
 
@@ -136,22 +137,7 @@ class EventScraperCli::CLI
     countries = EventScraperCli::Location.countries
 
 
-    # [----] MAKE THIS NEXT SECTION OF CODE INTO A METHOD IF ITS USED AGIAN ANYWHERE ELSE IN THIS CLASS [----]
-    # countries.each.with_index do |location, index|
-    #   puts "#{index+1}. #{location.country}".green
-    # end
-    #
-    # puts "00. Exit".red
-    #
     question = "Choose a Country to View Events: "
-    #
-    # country_choice = get_user_reponse(question, countries.count)
-    #
-    # return nil if country_choice == "00"
-    #
-    # country = countries[country_choice.to_i - 1].country
-
-    # [----] UP UNTIL THIS POINT [----]
 
     location = list_locations(countries, question)
 
@@ -159,17 +145,12 @@ class EventScraperCli::CLI
 
     events = EventScraperCli::Event.get_events_by_country(location.country)
 
-    # events = country.events
-
     question = "Enter a Event's Number: "
 
     chosen_event = list_events(events, question)
 
     chosen_event ? get_details(chosen_event) : return
 
-    # chosen_event.print_event_information
-    #
-    # open_in_browser(chosen_event)
     chosen_event
   end
 
@@ -190,7 +171,7 @@ class EventScraperCli::CLI
     events = EventScraperCli::Event.all.find_all {|event| user_date.between?(event.start_date, event.end_date) }
 
     if events.empty?
-      puts "\e[H\e[2J" # this clears the terminal screen
+      clear_screen
 
       print "No Events Found on the date: ".red
       print "#{user_date.month}-#{user_date.day}-#{user_date.year}\n".green
@@ -201,11 +182,10 @@ class EventScraperCli::CLI
 
     chosen_event = list_events(events, question)
 
-    puts "\e[H\e[2J" # this clears the terminal screen
+    clear_screen
 
     get_details(chosen_event)
 
-    # chosen_event.print_event_information
     chosen_event
   end
 
@@ -223,18 +203,13 @@ class EventScraperCli::CLI
 
     chosen_event ? get_details(chosen_event) : return
 
-    # get_details(chosen_event)
-
-    # chosen_event.print_event_information
-    #
-    # open_in_browser(chosen_event)
     chosen_event
   end
 
   # this method takes a array of event objects plus a question to prompt user then lists events with numbers, gets and returns user reponse to question
   def list_events(events, question)
 
-    puts "\e[H\e[2J" # this clears the terminal screen
+    clear_screen
 
     events.each_with_index do |event, index|
       puts "#{index+1}. #{event.name}".green
@@ -270,7 +245,7 @@ class EventScraperCli::CLI
     print "Open Webpage in Browser?(yes/no): ".blue
     response = gets.chomp.downcase
 
-    puts "\e[H\e[2J" # this clears the terminal screen
+    clear_screen
 
     system("xdg-open '#{event.url}'") if response == "y" || response == "yes"
   end
@@ -279,29 +254,23 @@ class EventScraperCli::CLI
 
     events = EventScraperCli::Event.get_events_by_location(location).sort_by {|e| e.location.city}
 
-    # events.each_with_index do |event, index|
-    #   puts "#{index+1}. #{event.name}".green
-    # end
-    # puts "00. Exit".red
-    #
     question = "Enter a Event's Number: "
-    # event_choice = get_user_reponse(question, events.count)
-    #
-    # return nil if event_choice == "00"
-    #
-    # chosen_event = events[event_choice.to_i - 1]
 
     chosen_event = list_events(events, question)
 
     get_details(chosen_event)
 
-    # chosen_event.print_event_information
-    #
-    # open_in_browser(chosen_event)
-
     chosen_event
   end
 
+  def exit_message
+    puts "Goodbye User".blue
+    puts "Exiting Now...".red
+  end
+
+  def clear_screen
+    puts "\e[H\e[2J" # this clears the terminal screen
+  end
 
   def reload_file
     puts "Reloading File.....".magenta
