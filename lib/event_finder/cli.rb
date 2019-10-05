@@ -4,8 +4,10 @@ class EventScraperCli::CLI
   attr_accessor :url
   attr_reader :scraper
 
-  def initialize
+  def call
+
     @scraper = EventScraperCli::Scraper.new
+    print_banner
     scrape_events(@scraper)
     show_menu
     exit_message
@@ -284,6 +286,24 @@ class EventScraperCli::CLI
     end
     # Return true when complete.
     true
+  end
+
+  def print_banner
+
+    puts '''
+___________
+\_   _____/__  _________   ____
+ |    __)_\  \/  /\____ \ /  _ \
+ |        \>    < |  |_> >  <_> )
+/_______  /__/\_ \|   __/ \____/
+        \/      \/|__|
+                       ___________.__            .___
+                       \_   _____/|__| ____    __| _/___________
+                        |    __)  |  |/    \  / __ |/ __ \_  __ \
+                        |     \   |  |   |  \/ /_/ \  ___/|  | \/
+                        \___  /   |__|___|  /\____ |\___  >__|
+                            \/            \/      \/    \/
+                            '''
   end
 
 
