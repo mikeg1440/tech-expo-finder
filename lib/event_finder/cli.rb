@@ -7,6 +7,7 @@ class EventScraperCli::CLI
   def call
 
     @scraper = EventScraperCli::Scraper.new
+    clear_screen
     print_banner
     scrape_events(@scraper)
     show_menu
@@ -16,9 +17,7 @@ class EventScraperCli::CLI
   # displays menu options to user and prompts for a selection
   def show_menu
 
-    clear_screen
-
-    puts "\tHello User!".blue
+    puts "\tHello #{Etc.getlogin}!".blue
 
     loop do
 
@@ -28,7 +27,7 @@ class EventScraperCli::CLI
       puts "2. Show Events by City - [find by city]".green
       puts "3. Show Events By Date - [find by date]".green
       puts "4. Get Event Info By Name - [find by name]".green
-      puts "!. Reload File".magenta
+      #puts "!. Reload File".magenta    # for dev purposes
       puts "0. Exit - [exit]".red
 
       print "Please Pick A Valid Menu Number[0-4]: ".blue
@@ -274,6 +273,7 @@ class EventScraperCli::CLI
     puts "\e[H\e[2J" # this clears the terminal screen
   end
 
+  # for dev purposes
   def reload_file
     puts "Reloading File.....".magenta
 
@@ -303,7 +303,7 @@ ___________
                         |     \   |  |   |  \/ /_/ \  ___/|  | \/
                         \___  /   |__|___|  /\____ |\___  >__|
                             \/            \/      \/    \/
-                            '''
+                            '''.magenta
   end
 
 

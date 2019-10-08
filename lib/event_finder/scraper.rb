@@ -66,13 +66,9 @@ class EventScraperCli::Scraper
 
   def scrape_event_details(event)
 
-
-    event_info = {}
-
     event.description = @doc.css(".desc strong").text
 
 
-    binding.pry
     event.time_data = @doc.css("#hvrout1").text.split("\n").map {|line| line.strip}
     hours = []
     days = []
@@ -81,7 +77,6 @@ class EventScraperCli::Scraper
     event.exhibitors = @doc.css("#exhibitors").text.match(/\d+/)
     event.photos = @doc.css("#photo").text.match(/\d+/)
     event.photo_url = @doc.css("#photo").css("a")[0]['href'] unless @doc.css("#photo").css("a").empty?
-    binding.pry
     event.price = @doc.css(".text-muted.ml-10").text.strip if @doc.css(".text-muted.ml-10")
     event.rating = @doc.css(".label.label-success").text.match(/\d\.?\d\/\d/)[0] if @doc.css(".label.label-success").text.match(/\d\.?\d\/\d/)
 
@@ -91,7 +86,6 @@ class EventScraperCli::Scraper
     event.category = @doc.css("#hvrout2 td a")[2].text.strip
     # end
 
-    binding.pry
 
 
     event.time_data.each do |line|

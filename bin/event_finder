@@ -1,5 +1,6 @@
 #! /usr/bin/env ruby
 
-require_relative "../lib/event_finder.rb"
+require_relative "../config/environment.rb"
+
 
 EventScraperCli::CLI.new.call

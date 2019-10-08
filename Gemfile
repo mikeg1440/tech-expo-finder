@@ -2,12 +2,13 @@
 
 source "https://rubygems.org"
 
-gem 'nokogiri'
-gem 'bundler'
 gem 'require_all'
+gem 'nokogiri'
 gem 'colorize'
+gem 'bundler'
 gem 'json'
 gem 'date'
+gem 'etc'
 
 
 group :developement do
