@@ -3,7 +3,7 @@ Ruby CLI application to assist in finding top Technology events in your area.
 
 ### Install Instructions
   1. Clone the repository
-  `git clone <URL REPO>`
+  `git clone https://github.com/mikeg1440/tech-expo-finder`
   2. Change into repo directory and Bundler
   `cd tech-expo-finder && bundle install`
   3. Run executable file to start program
@@ -12,7 +12,7 @@ Ruby CLI application to assist in finding top Technology events in your area.
   Add this line to your application's Gemfile:
 
   ```ruby
-  gem 'job_finder'
+  gem 'event_finder'
   ```
 
   And then execute:
@@ -21,7 +21,7 @@ Ruby CLI application to assist in finding top Technology events in your area.
 
   Or install it yourself as:
 
-      $ gem install job_finder
+      $ gem install event_finder
 
 ## Development
 
@@ -32,7 +32,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ### Contributor's Guide
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/job_finder.
+Bug reports and pull requests are welcome on GitHub at https://github.com/mikeg1440/event_finder.
 
 ### License
 
