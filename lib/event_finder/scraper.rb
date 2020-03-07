@@ -89,8 +89,7 @@ class EventScraperCli::Scraper
 
 
     event.time_data.each do |line|
-      hour_match = line.scan(/\d\d:\d\d [PM|AM]./)
-      # day_match = line.scan(/\( ?(\w+) (\d\d)?\)/)
+      hour_match = line.scan(/[0-9]{2}:[0-9]{2} [PM|AM]{2}/)
       day_match = line.scan(/[JFMARSND][a-z]{2} \d+/)
 
       hours << hour_match unless hour_match.empty?
