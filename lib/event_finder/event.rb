@@ -7,12 +7,10 @@ class EventScraperCli::Event
 
   @@all = []
 
-  def initialize( name:, start_date:, end_date:, date_string:, city:, country:, url: )
-    @name = name
-    @start_date = start_date
-    @end_date = end_date
-    @date_string = date_string
-    @url = url
+  # def initialize( name:, start_date:, end_date:, date_string:, city:, country:, url: )
+  def initialize( info )
+
+    info.each {|key, value| self.send("#{key}=", value) }
 
     save_location(city, country)
 
