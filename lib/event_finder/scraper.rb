@@ -55,7 +55,7 @@ class EventScraperCli::Scraper
           event_info[:start_date] = Date.parse(date_regex[0] << date_regex[3] << date_regex[4])
           event_info[:end_date] = Date.parse(date_regex[2] << date_regex[3] << date_regex[4])
         end
-
+        # name:, start_date:, end_date:, date_string:, city:, country:, url:
         EventScraperCli::Event.new(event_info)
 
       end
