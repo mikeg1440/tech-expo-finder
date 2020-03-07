@@ -20,6 +20,18 @@ GEM
       binding_of_caller (~> 0.7)
       pry (>= 0.10.4, < 1)
     require_all (3.0.0)
+    tty-color (0.5.1)
+    tty-cursor (0.7.1)
+    tty-prompt (0.20.0)
+      necromancer (~> 0.5.0)
+      pastel (~> 0.7.0)
+      tty-reader (~> 0.7.0)
+    tty-reader (0.7.0)
+      tty-cursor (~> 0.7)
+      tty-screen (~> 0.7)
+      wisper (~> 2.0.0)
+    tty-screen (0.7.1)
+    wisper (2.0.1)
 
 PLATFORMS
   ruby
@@ -34,6 +46,7 @@ DEPENDENCIES
   pry
   pry-moves
   require_all
+  tty-prompt (~> 0.20.0)
 
 BUNDLED WITH
    2.1.4
