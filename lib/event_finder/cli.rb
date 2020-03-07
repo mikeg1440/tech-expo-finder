@@ -17,6 +17,35 @@ class EventScraperCli::CLI
 
   # displays menu options to user and prompts for a selection
   def show_menu
+    # loop do
+    #   # display menu to user
+    #   puts "Please Pick a Option 1-4 or type in command on the right within brackets".blue
+    #   puts "1. Show Events by Country - [find by country]".green
+    #   puts "2. Show Events by City - [find by city]".green
+    #   puts "3. Show Events By Date - [find by date]".green
+    #   puts "4. Get Event Info By Name - [find by name]".green
+    #   #puts "!. Reload File".magenta    # for dev purposes
+    #   puts "0. Exit - [exit]".red
+    #
+    #   print "Please Pick A Valid Menu Number[0-4]: ".blue
+    #   menu_pick = gets.chomp.downcase
+    #
+    #   if menu_pick == "0" || menu_pick == "exit"
+    #     break
+    #   else
+    #     event = handle_input(menu_pick)
+    #   end
+    #   menu_pick = nil
+    #   display_info(event) if event
+    # end
+
+    menu_pick = @prompt.select('Please Pick a Option 1-4 or type in command on the right within brackets') do |menu|
+      menu.choice 'Show Events by Country', 'find by country'
+      menu.choice 'Show Events by City', 'find by city'
+      menu.choice 'Show Events By Date', 'find by date'
+      menu.choice 'Get Event Info By Name', 'find by name'
+      menu.choice 'Exit', 'exit'
+    end
 
     puts "\tHello #{Etc.getlogin}!".blue
 
