@@ -2,11 +2,12 @@
 class EventScraperCli::CLI
 
   attr_accessor :url
-  attr_reader :scraper
+  attr_reader :scraper, :prompt
 
   def call
 
     @scraper = EventScraperCli::Scraper.new
+    @prompt = TTY::Prompt.new
     clear_screen
     print_banner
     scrape_events(@scraper)
