@@ -35,10 +35,14 @@ class EventScraperCli::Scraper
         # convert out date_string into start and end Date objects
         if event_info[:date_string].include?(" - ")
           date_regex = event_info[:date_string].scan(/\S+/)
-
           event_info[:start_date] = Date.parse(date_regex[0] << date_regex[3] << date_regex[4])
           event_info[:end_date] = Date.parse(date_regex[2] << date_regex[3] << date_regex[4])
+        else
+          date = Date.parse(event_info[:date_string])
+          event_info[:start_date] = date
+          event_info[:end_date] = date
         end
+
 
         EventScraperCli::Event.new(event_info) unless EventScraperCli::Event.all.find {|event| event.url == event_info[:url]}
 
