@@ -23,7 +23,8 @@ class EventScraperCli::Event
   end
 
   def self.get_events_by_location(location)
-    self.all.find_all {|event| event.location == location }
+    events = self.all.find_all {|event| event.location == location }
+    events.sort_by {|event| event.location.city}
   end
 
   def self.get_events_by_country(country)
