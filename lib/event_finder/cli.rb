@@ -93,13 +93,15 @@ class EventScraperCli::CLI
   # gets uniq sorted list of cities from Location.all objects and displays list for user to choose to view events from.
   def find_events_by_city
 
-    sorted_cities = EventScraperCli::Location.cities
+    locations = EventScraperCli::Location.cities
 
-    input_question = "Choose a City to View Events: "
+    cities_choices = locations.map do |location|
+      {name: "#{location.city}, #{location.country}", value: location}
+    end
 
-    location = list_locations(sorted_cities, input_question)
+    location = @prompt.select('Choose a City to View Events: ', cities_choices, per_page: 20)
 
-    show_events_by_location(location) if location
+    show_events_by_location(location)
 
   end
 
