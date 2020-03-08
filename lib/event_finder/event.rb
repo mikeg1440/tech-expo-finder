@@ -7,7 +7,6 @@ class EventScraperCli::Event
 
   @@all = []
 
-  # def initialize( name:, start_date:, end_date:, date_string:, city:, country:, url: )
   def initialize( info )
 
     info.each {|key, value| self.send("#{key}=", value) }
