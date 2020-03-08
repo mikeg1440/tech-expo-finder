@@ -41,8 +41,9 @@ class EventScraperCli::Event
     print "\tEvent Date: "
     print "#{self.date_string}\n".green
     print "\tEvent Hours: "
-    self.hours.each.with_index {|day, i| print "\n\t\t#{day.join(" - ")}".green} unless self.hours == nil || self.hours.empty?
-    # self.hours.each.with_index {|day, i| print "\n\t\t#{self.days[i]} #{day.join(" - ")}".green} unless self.hours == nil || self.hours.empty?
+
+    self.times.each {|time| print "\n\t\t#{time[:date]} - #{time[:hours]}\n"}
+
     print "\tRating: "
     print "#{self.rating}\n".green
 
