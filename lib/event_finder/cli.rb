@@ -254,15 +254,26 @@ class EventScraperCli::CLI
 
   def show_events_by_location(location)
 
-    events = EventScraperCli::Event.get_events_by_location(location).sort_by {|e| e.location.city}
+    # events = EventScraperCli::Event.get_events_by_location(location).sort_by {|e| e.location.city}
+    #
+    # question = "Enter a Event's Number: "
+    #
+    # chosen_event = list_events(events, question)
+    #
+    # get_details(chosen_event)
+    #
+    # chosen_event
 
-    question = "Enter a Event's Number: "
+    events = EventScraperCli::Event.get_events_by_location(location)
 
-    chosen_event = list_events(events, question)
+    events_choices = events.map do |event|
+      {name: event.name, value: event}
+    end
 
-    get_details(chosen_event)
+    event = @prompt.select('Select a Event: ', events_choices)
 
-    chosen_event
+    get_details(event)
+    event
   end
 
   def exit_message
