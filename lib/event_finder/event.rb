@@ -42,7 +42,7 @@ class EventScraperCli::Event
     print "#{self.date_string}\n".green
     print "\tEvent Hours: "
 
-    self.times.each {|time| print "\n\t\t#{time[:date]} - #{time[:hours]}\n"}
+    self.times.each {|time| print "\n\t\t#{time[:date]} - #{time[:hours]}\n"} if event.times
 
     print "\tRating: "
     print "#{self.rating}\n".green
