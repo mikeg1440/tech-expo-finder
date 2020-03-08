@@ -6,13 +6,22 @@ class EventScraperCli::CLI
 
   def call
 
+    puts "\tHello #{Etc.getlogin}!".blue
+
     @scraper = EventScraperCli::Scraper.new
+    # @scraper = EventScraperCli::Scraper.new('https://10times.com/top100/technology')
     @prompt = TTY::Prompt.new
+    run
+    exit_message
+  end
+
+  def run
+
     clear_screen
     print_banner
-    scrape_events(@scraper)
+    scrape_events
     show_menu
-    exit_message
+
   end
 
   # displays menu options to user and prompts for a selection
