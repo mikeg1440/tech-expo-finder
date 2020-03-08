@@ -8,29 +8,13 @@ class EventScraperCli::Scraper
   # initialize with defualt of saved page file path unless given a url
   # default url should be https://10times.com/top100/technology
   def initialize(url = "pages/top100.html")
-
     @url = url
-
-    if url != "pages/top100.html"
-      @doc = open_from_url(url)
-    else
-      @doc = open_from_file(url)
-    end
-
+    @doc = open_from_url(url)
     self
   end
 
-  def open_from_file(filepath = "pages/top100.html")
-    html = File.read(filepath)
-    @doc = Nokogiri::HTML(html)
-    save
-    @doc
-  end
-
   def open_from_url(url)
-    @doc = Nokogiri::HTML(open(url))
-    save
-    @doc
+    Nokogiri::HTML(open(url))
   end
 
   def scrape_and_create_events#(doc, css_selectors = nil)
