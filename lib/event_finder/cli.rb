@@ -165,7 +165,11 @@ class EventScraperCli::CLI
     month, day, year = user_input.split("-")
     user_date = Date.parse([year, month, day].join("-"))
 
-    events = EventScraperCli::Event.all.find_all {|event| user_date.between?(event.start_date, event.end_date) }
+    events = EventScraperCli::Event.all.find_all do |event|
+      if event.start_date && event.end_date
+        return user_date.between?(event.start_date, event.end_date)
+      end
+    end
 
     if events.empty?
       clear_screen
