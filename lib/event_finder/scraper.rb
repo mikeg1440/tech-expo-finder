@@ -56,7 +56,7 @@ class EventScraperCli::Scraper
           event_info[:end_date] = Date.parse(date_regex[2] << date_regex[3] << date_regex[4])
         end
 
-        EventScraperCli::Event.new(event_info)
+        EventScraperCli::Event.new(event_info) unless EventScraperCli::Event.all.find {|event| event.url == event_info[:url]}
 
       end
 
