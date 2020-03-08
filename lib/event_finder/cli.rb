@@ -155,22 +155,19 @@ class EventScraperCli::CLI
 
     countries = EventScraperCli::Location.countries
 
-
-    question = "Choose a Country to View Events: "
-
-    location = list_locations(countries, question)
-
-    return nil unless location
+    events_hash = countries.map do |country|
+      {name: country.country, value: country}
+    end
+    location = @prompt.select('Choose a Country to View Events: ', events_hash, per_page: 30)
 
     events = EventScraperCli::Event.get_events_by_country(location.country)
 
-    question = "Enter a Event's Number: "
+    events_hash = events.map do |event|
+      {name: event.name, value: event}
+    end
 
-    chosen_event = list_events(events, question)
+    @prompt.select("Select a Event: ", events_hash)
 
-    chosen_event ? get_details(chosen_event) : return
-
-    chosen_event
   end
 
 
@@ -241,6 +238,12 @@ class EventScraperCli::CLI
 
     event_choice == "00" ? nil : events[event_choice.to_i - 1]
 
+    events_hash = events.map.with_index(1) do |event, idx|
+      {name: "#{idx+1}. #{event.name}", value: idx}
+    end
+
+    @prompt.select(question, events_hash)
+
   end
 
   def get_event_details?
@@ -257,7 +260,6 @@ class EventScraperCli::CLI
   def get_details(event)
     detail_scraper = EventScraperCli::Scraper.new(event.url)
     detail_scraper.scrape_event_details(event)
-    # system("xdg-open '#{event.url}'")
   end
 
   def open_in_browser(event)
