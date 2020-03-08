@@ -3,7 +3,7 @@
 - [X] Create a new repo
 - [X] Make a README file for the repo and push to github
 - [X] Choose a website to scrape data from (https://10times.com/top100/technology)
-- [ ] Create a outline for the project
+- [X] Create a outline for the project
  - [ ] States the purpose of the project
  - [ ] Includes a timeline
  - [ ] Includes goals/objectives   
@@ -45,4 +45,3 @@ Class Structure
     - scraper
       - event
         - location
-          
