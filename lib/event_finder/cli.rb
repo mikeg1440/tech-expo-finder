@@ -81,6 +81,7 @@ class EventScraperCli::CLI
 
   # [*] this method is for getting user's choice of event after events are listed with coralating numbers [*]
   # takes a question as a string and max option number then displays question and gets/validates user input
+  # ** DELETE THIS AFTER CONVERTING TO TTY-PROMPTS **
   def get_user_reponse(question, max_option)
     response = ""
     until response.to_i.between?(1, max_option) || response == "00"
@@ -110,25 +111,16 @@ class EventScraperCli::CLI
 
     clear_screen
 
+    binding.pry
     if question.match(/City/)
-      locations.each_with_index do |location, index|
-        puts "#{index+1}. #{location.city}, #{location.country}".green
-      end
+      cities_choices = locations.map {|city| {name: "#{location.city}, #{location.country}", value: city}}
+      location = @prompt.select(question, cities_choices, per_page: 20)
     else
-      locations.each.with_index do |location, index|
-        puts "#{index+1}. #{location.country}".green
-      end
+      countries_choices = locations.map {|country| {name: location.country, value: country}}
+      location = @prompt.select(question, countries_choices, per_page: 20)
     end
 
-    puts "00. Exit".red
-
-    user_choice = get_user_reponse(question, locations.count)
-
-    clear_screen
-
-    return nil if user_choice == "00"
-
-    locations[user_choice.to_i - 1]
+    location
   end
 
   # gets unique sorted list of countries with events, then asks user to pick a country that they want to view events from
@@ -190,6 +182,8 @@ class EventScraperCli::CLI
     chosen_event
   end
 
+
+
   # asks user for a search string and finds all events with any match to that string, then asks what event they want details of
   def find_events_by_name
 
@@ -198,7 +192,7 @@ class EventScraperCli::CLI
 
     events = EventScraperCli::Event.all.find_all {|e| e.name.downcase.match(/#{user_input.downcase}/)}
 
-    question = "Enter a Event's Number: "
+    question = "Select a Event: "
 
     chosen_event = list_events(events, question)
 
@@ -212,22 +206,11 @@ class EventScraperCli::CLI
 
     clear_screen
 
-    events.each_with_index do |event, index|
-      puts "#{index+1}. #{event.name}".green
+    events_hash = events.map.with_index(1) do |event|
+      {name: event.name, value: event}
     end
 
-    puts "00. Exit".red
-    # event_choice = nil
-
-    event_choice = get_user_reponse(question, events.count)
-
-    event_choice == "00" ? nil : events[event_choice.to_i - 1]
-
-    events_hash = events.map.with_index(1) do |event, idx|
-      {name: "#{idx+1}. #{event.name}", value: idx}
-    end
-
-    @prompt.select(question, events_hash)
+    @prompt.select(question, events_hash, per_page: 20)
 
   end
 
