@@ -28,7 +28,6 @@ class EventScraperCli::Scraper
   end
 
   def open_from_url(url)
-    # html = open(url)
     @doc = Nokogiri::HTML(open(url))
     save
     @doc
@@ -40,7 +39,7 @@ class EventScraperCli::Scraper
 
       next if element.text == "RankEventWhenWhereCategoryRating"
 
-      if element.text != ""# && !css_selectors
+      if element.text != ""
         event_info = {
           name: element.css("strong").first.text.strip,
           date_string: element.css("td strong")[1].text.strip,
