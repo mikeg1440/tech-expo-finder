@@ -30,7 +30,7 @@ class EventScraperCli::CLI
   # displays menu options to user and prompts for a selection
   def show_menu
 
-    menu_pick = @prompt.select('Please Pick a Option 1-4 or type in command on the right within brackets') do |menu|
+    menu_pick = @prompt.select('Please select a menu option: ') do |menu|
       menu.choice 'Show Events by Country', 'find by country'
       menu.choice 'Show Events by City', 'find by city'
       menu.choice 'Show Events By Date', 'find by date'
