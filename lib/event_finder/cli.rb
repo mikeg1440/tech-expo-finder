@@ -11,7 +11,10 @@ class EventScraperCli::CLI
     @scraper = EventScraperCli::Scraper.new
     # @scraper = EventScraperCli::Scraper.new('https://10times.com/top100/technology')
     @prompt = TTY::Prompt.new(help_color: :magenta, active_color: :blue)
-    run
+    loop do
+      break if run == 'exit'
+    end
+    
     exit_message
   end
 
