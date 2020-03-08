@@ -50,8 +50,6 @@ class EventScraperCli::CLI
   def handle_input(menu_pick)
 
     case menu_pick
-    when "exit"
-      return
     when "find by country"
       event = find_events_by_country
     when "find by city"
@@ -60,11 +58,6 @@ class EventScraperCli::CLI
       event = find_events_by_date
     when "find by name"
       event = find_events_by_name
-    when "reload"
-      reload_file
-    # else
-    #   clear_screen
-    #   puts "Invalid Menu Choice\nPlease Pick From One of The Menu Options!".red
     end
 
     event
