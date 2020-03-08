@@ -214,16 +214,6 @@ class EventScraperCli::CLI
 
   end
 
-  def get_event_details?
-    response = ""
-
-    until ["y", "yes", "n", "no"].include?(response.downcase)
-      print "Would you Like to See Event's Details(yes/no): ".blue
-      response = gets.chomp.downcase
-    end
-
-    response == "y" || response == "yes"
-  end
 
   def get_details(event)
     detail_scraper = EventScraperCli::Scraper.new(event.url)
@@ -240,16 +230,6 @@ class EventScraperCli::CLI
   end
 
   def show_events_by_location(location)
-
-    # events = EventScraperCli::Event.get_events_by_location(location).sort_by {|e| e.location.city}
-    #
-    # question = "Enter a Event's Number: "
-    #
-    # chosen_event = list_events(events, question)
-    #
-    # get_details(chosen_event)
-    #
-    # chosen_event
 
     events = EventScraperCli::Event.get_events_by_location(location)
 
