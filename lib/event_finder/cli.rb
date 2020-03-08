@@ -66,29 +66,29 @@ class EventScraperCli::CLI
   def handle_input(menu_pick)
 
     case menu_pick
-    when "0", "exit"
+    when "exit"
       return
-    when "1", "find by country"
+    when "find by country"
       event = find_events_by_country
-    when "2", "find by city"
+    when "find by city"
       event = find_events_by_city
-    when "3", "find by date"
+    when "find by date"
       event = find_events_by_date
-    when "4", "find by name"
+    when "find by name"
       event = find_events_by_name
-    when "!", "reload"
+    when "reload"
       reload_file
-    else
-      clear_screen
-      puts "Invalid Menu Choice\nPlease Pick From One of The Menu Options!".red
+    # else
+    #   clear_screen
+    #   puts "Invalid Menu Choice\nPlease Pick From One of The Menu Options!".red
     end
 
     event
   end
 
   # method accepts a scraper object as argument and calls scrape_and_create_events on the object to scrape data and create event and location objects
-  def scrape_events(scraper)
-    scraper.scrape_and_create_events
+  def scrape_events
+    @scraper.scrape_and_create_events
   end
 
   # takes a event object argument and calls print_event_information on the object
