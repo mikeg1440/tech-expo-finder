@@ -38,6 +38,8 @@ class EventScraperCli::CLI
       menu.choice 'Exit', 'exit'
     end
 
+    return menu_pick if menu_pick == 'exit'
+
     event = handle_input(menu_pick)
 
     display_info(event) if event
