@@ -54,8 +54,10 @@ class EventScraperCli::Event
     print "\n\tEvent Location: "
     print "#{self.location.city}, #{self.location.country}\n".green
 
-    print "\tExpected Visitors: "
-    print "#{self.visitors}\n".green
+    unless self.visitors&.empty?
+      print "\tExpected Visitors: "
+      print "#{self.visitors}\n".green
+    end
 
     if self.expected_exhibitors
       print "\tExpected Exhibitors: "
