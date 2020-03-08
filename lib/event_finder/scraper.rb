@@ -6,6 +6,7 @@ class EventScraperCli::Scraper
   @@all = []
 
   # initialize with defualt of saved page file path unless given a url
+  # default url should be https://10times.com/top100/technology
   def initialize(url = "pages/top100.html")
 
     @url = url
@@ -41,7 +42,7 @@ class EventScraperCli::Scraper
 
       if element.text != ""# && !css_selectors
         event_info = {
-          name: element.css(".box-link strong").text.strip,
+          name: element.css("strong").first.text.strip,
           date_string: element.css("td strong")[1].text.strip,
           country: element.css("td a.block").text.strip,
           city: element.css("td small.text-muted").first.text.strip,
