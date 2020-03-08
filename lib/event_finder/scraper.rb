@@ -56,7 +56,7 @@ class EventScraperCli::Scraper
           event_info[:start_date] = Date.parse(date_regex[0] << date_regex[3] << date_regex[4])
           event_info[:end_date] = Date.parse(date_regex[2] << date_regex[3] << date_regex[4])
         end
-        # name:, start_date:, end_date:, date_string:, city:, country:, url:
+
         EventScraperCli::Event.new(event_info)
 
       end
@@ -70,7 +70,6 @@ class EventScraperCli::Scraper
     event.description = @doc.css(".desc strong").text
 
 
-    # event.time_data = @doc.css("#hvrout1").text.split("\n").map {|line| line.strip}
     time_data = @doc.css("#hvrout1").first.text.scan(/(\d{1,2}:\d{2} [AM|PM]{2} \- \d{1,2}:\d{2} [PM|AM]{2})\s+(\(\w+ \d{2}\))/)
     booth_data = @doc.css("#hvrout1").first.text.match(/(Exhibit Booth Cost) ([\w ]+)View Details$/)
 
@@ -88,7 +87,6 @@ class EventScraperCli::Scraper
 
     if @doc.css("#hvrout2 td a").count == 3
       event.expected_exhibitors = @doc.css("#hvrout2 td a")[1].text.strip
-      # event.category = @doc.css("#hvrout2 td a")[2].text.strip
       event.category = @doc.css('#hvrout2 a').text
     end
 
