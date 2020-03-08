@@ -47,8 +47,10 @@ class EventScraperCli::Event
     print "\tRating: "
     print "#{self.rating}\n".green
 
-    print "\tCategory: "
-    print "#{self.category}\n".green
+    if self.category
+      print "\tCategory: "
+      print "#{self.category}\n".green
+    end
 
     print "\n\tEvent Location: "
     print "#{self.location.city}, #{self.location.country}\n".green
@@ -56,8 +58,10 @@ class EventScraperCli::Event
     print "\tExpected Visitors: "
     print "#{self.visitors}\n".green
 
-    print "\tExpected Exhibitors: "
-    print "#{self.expected_exhibitors}\n".green
+    if self.expected_exhibitors
+      print "\tExpected Exhibitors: "
+      print "#{self.expected_exhibitors}\n".green
+    end
 
     print "\tVerified Exhibitors: "
     print "#{self.exhibitors}\n".green
