@@ -3,7 +3,7 @@ class EventScraperCli::Event
 
   attr_accessor :name, :location, :start_date, :end_date, :date_string, :url, :hours, :days,
   :description, :users, :exhibitors, :photos, :photo_url, :price,:rating, :visitors, :expected_exhibitors,
-  :category, :time_data, :country, :city
+  :category, :time_data, :country, :city, :booth, :times
 
   @@all = []
 
