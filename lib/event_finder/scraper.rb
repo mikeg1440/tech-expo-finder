@@ -70,36 +70,28 @@ class EventScraperCli::Scraper
     event.description = @doc.css(".desc strong").text
 
 
-    event.time_data = @doc.css("#hvrout1").text.split("\n").map {|line| line.strip}
-    hours = []
-    days = []
+    # event.time_data = @doc.css("#hvrout1").text.split("\n").map {|line| line.strip}
+    time_data = @doc.css("#hvrout1").first.text.scan(/(\d{1,2}:\d{2} [AM|PM]{2} \- \d{1,2}:\d{2} [PM|AM]{2})\s+(\(\w+ \d{2}\))/)
+    booth_data = @doc.css("#hvrout1").first.text.match(/(Exhibit Booth Cost) ([\w ]+)View Details$/)
 
-    event.users = @doc.css("#visitors").text.match(/\d+/)
-    event.exhibitors = @doc.css("#exhibitors").text.match(/\d+/)
-    event.photos = @doc.css("#photo").text.match(/\d+/)
+    event.booth = {cost: booth_data[1]}
+    event.times = time_data.map {|date_time| {date: date_time[1], hours: date_time[0]}}
+
+
+    event.users = @doc.css("#visitors").text.match(/\d+/)[0]
+    event.exhibitors = @doc.css("#exhibitors").text.match(/\d+/)[0]
+    event.visitors = @doc.css('.table.noBorder.mng').text.match(/\d+ Visitors/)[0]
+    event.photos = @doc.css("#photo").text.match(/\d+/)[0] if @doc.css("#photo").text.match(/\d+/)
     event.photo_url = @doc.css("#photo").css("a")[0]['href'] unless @doc.css("#photo").css("a").empty?
     event.price = @doc.css(".text-muted.ml-10").text.strip if @doc.css(".text-muted.ml-10")
     event.rating = @doc.css(".label.label-success").text.match(/\d\.?\d\/\d/)[0] if @doc.css(".label.label-success").text.match(/\d\.?\d\/\d/)
 
-    # if @doc.css("#hvrout2 td a").count == 3
-    event.visitors = @doc.css("#hvrout2 td a")[0].text.strip
-    event.expected_exhibitors = @doc.css("#hvrout2 td a")[1].text.strip
-    event.category = @doc.css("#hvrout2 td a")[2].text.strip
-    # end
-
-
-
-    event.time_data.each do |line|
-      hour_match = line.scan(/[0-9]{2}:[0-9]{2} [PM|AM]{2}/)
-      day_match = line.scan(/[JFMARSND][a-z]{2} \d+/)
-
-      hours << hour_match unless hour_match.empty?
-      days << day_match unless day_match.empty?
+    if @doc.css("#hvrout2 td a").count == 3
+      event.expected_exhibitors = @doc.css("#hvrout2 td a")[1].text.strip
+      # event.category = @doc.css("#hvrout2 td a")[2].text.strip
+      event.category = @doc.css('#hvrout2 a').text
     end
 
-
-    event.hours = hours unless hours.empty?
-    event.days = days unless days.empty?
   end
 
   private
