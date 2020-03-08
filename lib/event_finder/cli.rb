@@ -98,7 +98,7 @@ class EventScraperCli::CLI
       {name: "#{location.city}, #{location.country}", value: location}
     end
 
-    location = @prompt.select('Choose a City to View Events: ', cities_choices, per_page: 20)
+    location = @prompt.select('Choose a City to View Events: ', cities_choices, per_page: 30)
 
     show_events_by_location(location)
 
@@ -112,10 +112,10 @@ class EventScraperCli::CLI
     binding.pry
     if question.match(/City/)
       cities_choices = locations.map {|city| {name: "#{location.city}, #{location.country}", value: city}}
-      location = @prompt.select(question, cities_choices, per_page: 20)
+      location = @prompt.select(question, cities_choices, per_page: 30)
     else
       countries_choices = locations.map {|country| {name: location.country, value: country}}
-      location = @prompt.select(question, countries_choices, per_page: 20)
+      location = @prompt.select(question, countries_choices, per_page: 30)
     end
 
     location
@@ -137,7 +137,7 @@ class EventScraperCli::CLI
       {name: event.name, value: event}
     end
 
-    @prompt.select("Select a Event: ", events_hash)
+    @prompt.select("Select a Event: ", events_hash, per_page: 30)
 
   end
 
@@ -235,7 +235,7 @@ class EventScraperCli::CLI
       {name: event.name, value: event}
     end
 
-    event = @prompt.select('Select a Event: ', events_choices)
+    event = @prompt.select('Select a Event: ', events_choices, per_page: 30)
 
     get_details(event)
     event
