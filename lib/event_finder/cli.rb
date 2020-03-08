@@ -244,12 +244,12 @@ class EventScraperCli::CLI
   end
 
   def open_in_browser(event)
-    print "Open Webpage in Browser?(yes/no): ".blue
-    response = gets.chomp.downcase
+
+    if @prompt.yes?('Open events page in Browser?')
+      system("xdg-open '#{event.url}'")
+    end
 
     clear_screen
-
-    system("xdg-open '#{event.url}'") if response == "y" || response == "yes"
   end
 
   def show_events_by_location(location)
