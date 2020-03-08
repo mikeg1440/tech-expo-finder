@@ -73,13 +73,12 @@ class EventScraperCli::Scraper
     time_data = @doc.css("#hvrout1").first.text.scan(/(\d{1,2}:\d{2} [AM|PM]{2} \- \d{1,2}:\d{2} [PM|AM]{2})\s+(\(\w+ \d{2}\))/)
     booth_data = @doc.css("#hvrout1").first.text.match(/(Exhibit Booth Cost) ([\w ]+)View Details$/)
 
-    event.booth = {cost: booth_data[1]}
+    event.booth = {cost: booth_data[1]} if booth_data
     event.times = time_data.map {|date_time| {date: date_time[1], hours: date_time[0]}}
 
-
-    event.users = @doc.css("#visitors").text.match(/\d+/)[0]
-    event.exhibitors = @doc.css("#exhibitors").text.match(/\d+/)[0]
-    event.visitors = @doc.css('.table.noBorder.mng').text.match(/\d+ Visitors/)[0]
+    event.users = @doc.css("#visitors").text.match(/\d+/)[0] if @doc.css("#visitors").text.match(/\d+/)
+    event.exhibitors = @doc.css("#exhibitors").text.match(/\d+/)[0] if @doc.css("#exhibitors").text.match(/\d+/)
+    event.visitors = @doc.css('.table.noBorder.mng').text.match(/\d+ Visitors/)[0] if @doc.css('.table.noBorder.mng').text.match(/\d+ Visitors/)
     event.photos = @doc.css("#photo").text.match(/\d+/)[0] if @doc.css("#photo").text.match(/\d+/)
     event.photo_url = @doc.css("#photo").css("a")[0]['href'] unless @doc.css("#photo").css("a").empty?
     event.price = @doc.css(".text-muted.ml-10").text.strip if @doc.css(".text-muted.ml-10")
