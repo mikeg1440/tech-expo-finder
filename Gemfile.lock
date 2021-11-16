@@ -5,7 +5,7 @@ GEM
       debug_inspector (>= 0.0.1)
     coderay (1.1.2)
     colorize (0.8.1)
-    date (3.0.0)
+    date (3.0.2)
     debug_inspector (0.0.3)
     equatable (0.6.1)
     etc (1.1.0)
